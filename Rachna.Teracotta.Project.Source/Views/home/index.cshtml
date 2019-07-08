@@ -1,0 +1,690 @@
+﻿
+@{
+    ViewBag.Title = "Online Shopping Store";
+    Layout = "~/Views/Shared/_layout2.cshtml";
+
+    Rachna.Teracotta.Project.Source.ViewModel.HomePageModel homePageModel = new Rachna.Teracotta.Project.Source.ViewModel.HomePageModel();
+    homePageModel = Rachna.Teracotta.Project.Source.ViewModel.HomePage.Instance.Get();
+}
+
+<!-- Categories Area -->
+<div class="ho-section categories-area mt-30">
+    <div class="container">
+        <div class="section-title">
+            <h3>OUR CATEGORIES</h3>
+        </div>
+        <div class="categories-slider-2 slider-navigation-2 slider-navigation-2-m0">
+            @{
+                if (homePageModel._categories != null && homePageModel._categories.Count > 0)
+                {
+                    foreach (var item in homePageModel._categories)
+                    {
+                        <div class="category-wrapper">
+                            <!-- Single Category -->
+                            <div class="category">
+                                <a href="/home/productbycategory?subcatid=@item.Category_Id&category=category" class="category-thumb">
+                                    <img src="../../@item.Category_Photo" alt="category image">
+                                </a>
+                                <div class="category-content">
+                                    <h5 class="category-title">@item.Category_Title</h5>
+                                    <span class="category-productcounter">Many Products In Stock</span>
+                                    <a href="/home/productbycategory?subcatid=@item.Category_Id&category=category" class="category-productlink">Shop Now <i class="ion ion-md-arrow-dropright"></i></a>
+                                </div>
+                            </div>
+                            <!--// Single Category -->
+                        </div>
+                    }
+                }
+            }
+        </div>
+    </div>
+</div>
+<!--// Categories Area -->
+<!-- Deal Of The Day Area -->
+@if (homePageModel._dealoftheday != null && homePageModel._dealoftheday.Count > 0)
+{
+    if (homePageModel._dealoftheday.Where(m => m.Deal_Starts_From.Date >= DateTime.Now.Date).ToList().Count > 0)
+    {
+        <div class="ho-section deal-of-the-day-area bg-white pt-30">
+            <div class="container">
+                <div class="section-title">
+                    <h3>DEAL OF THE DAYS</h3>
+                </div>
+                <div class="product-slider deal-of-the-day-slider slider-navigation-2 slider-dots">
+                    @foreach (var item in homePageModel._dealoftheday)
+                    {
+                        if (item.Deal_Starts_From.Date >= DateTime.Now.Date)
+                        {
+                            <div class="product-slider-col">
+                                <article class="hoproduct hoproduct-2">
+                                    <div class="hoproduct-image">
+                                        <a class="hoproduct-thumb" href="/product/index?id=@item.Product_Id&title=@item.Product.Product_Title">
+                                            <img class="hoproduct-frontimage" src="../../@item.Product.ProductBanner.Where(m => m.Product_Banner_Default == 1).FirstOrDefault().Product_Banner_Photo" alt="product image">
+                                            <img class="hoproduct-backimage" src="../../@item.Product.ProductBanner.Where(m => m.Product_Banner_Default != 1).FirstOrDefault().Product_Banner_Photo" alt="product image">
+                                        </a>
+                                        @{
+                                            decimal GST_Amount = 0, GST_Percentage = 0;
+                                            GST_Amount = (item.Product.Product_Our_Price - item.Deal_Price);
+                                            GST_Percentage = (GST_Amount * 100) / item.Product.Product_Our_Price;
+                                        }
+                                        @if (GST_Percentage != 0)
+                                        {
+                                            <ul class="hoproduct-flags">
+
+                                                <li class="flag-pack">New</li>
+                                                <li class="flag-discount">
+                                                    @Math.Round(GST_Percentage) <span>%</span>
+                                                </li>
+                                            </ul>
+                                        }
+                                    </div>
+                                    @{
+                                        DateTime dealDay = item.Deal_Starts_From.AddDays(1);
+                                    }
+                                    <div class="hoproduct-countdown countdown" data-countdown="@dealDay.ToString("yyyy/MM/dd")"></div>
+                                    <div class="hoproduct-content">
+                                        <h5 class="hoproduct-title">
+                                            <a href="product-details.html">
+                                                @item.Product.Product_Title
+                                            </a>
+                                        </h5>
+                                        <div class="hoproduct-rattingbox">
+                                            <h6>@item.Product.ProdComments.Count Review(s)</h6>
+                                            <div class="rattingbox">
+                                                @if (item.Product.Store_Rating == 1)
+                                                {
+                                                    <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                }
+                                                else if (item.Product.Store_Rating == 2)
+                                                {
+                                                    <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                    <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                }
+                                                else if (item.Product.Store_Rating == 3)
+                                                {
+                                                    <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                    <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                    <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                }
+                                                else if (item.Product.Store_Rating == 4)
+                                                {
+                                                    <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                    <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                    <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                    <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                }
+                                                else if (item.Product.Store_Rating == 5)
+                                                {
+                                                    <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                    <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                    <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                    <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                    <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="hoproduct-pricebox">
+                                            <div class="pricebox">
+                                                <del class="oldprice">&#x20B9; @Math.Round(item.Product.Product_Our_Price)</del>
+                                                <span class="price">&#x20B9; @Math.Round(item.Deal_Price)</span>
+                                            </div>
+                                            <span class="discount">@Math.Round(GST_Percentage) <span>%</span></span>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    }
+}
+<!--// Deal Of The Day Area -->
+<!-- Banner Area -->
+@if (homePageModel._ads != null && homePageModel._ads.Count > 0)
+{
+    <div class="banner-area">
+        <div class="container">
+            <div class="row">
+                @foreach (var item in homePageModel._ads)
+                {
+                    if (item.Ads_Type == "Advertisement 4")
+                    {
+                        <div class="col-md-6">
+                            <div class="imgbanner imgbanner-2 mt-30">
+                                <a href="@item.Ads_RedirectUrl">
+                                    <img src="../../@item.Ads_Banner_Or_Source" alt="banner">
+                                </a>
+                            </div>
+                        </div>
+                    }
+                    if (item.Ads_Type == "Advertisement 5")
+                    {
+                        <div class="col-md-6">
+                            <div class="imgbanner imgbanner-2 mt-30">
+                                <a href="@item.Ads_RedirectUrl">
+                                    <img src="../../@item.Ads_Banner_Or_Source" alt="banner">
+                                </a>
+                            </div>
+                        </div>
+
+
+                    }
+                }
+            </div>
+        </div>
+    </div>
+}
+<!--// Banner Area -->
+<!-- Our Products Area -->
+@if ((homePageModel._featureOurChoice != null && homePageModel._featureOurChoice.Count > 0) ||
+    (homePageModel._featureBest != null && homePageModel._featureBest.Count > 0) ||
+    (homePageModel._featureHot != null && homePageModel._featureHot.Count > 0))
+{
+    <div class="our-products-area pt-30">
+        <div class="container">
+            <div class="section-title">
+                <h3>TRENDING PRODUCTS</h3>
+                <ul class="nav" id="bstab2" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="bstab2-area1-tab" data-toggle="tab" href="#bstab2-area1"
+                           role="tab" aria-controls="bstab2-area1" aria-selected="true">OUR CHOICE</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="bstab2-area2-tab" data-toggle="tab" href="#bstab2-area2" role="tab"
+                           aria-controls="bstab2-area2" aria-selected="false">BEST</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="bstab2-area3-tab" data-toggle="tab" href="#bstab2-area3" role="tab"
+                           aria-controls="bstab2-area3" aria-selected="false">HOT</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="tab-content" id="bstab2-ontent">
+                @if (homePageModel._featureOurChoice != null && homePageModel._featureOurChoice.Count > 0)
+                {
+                    <div class="tab-pane fade show active" id="bstab2-area1" role="tabpanel" aria-labelledby="bstab2-area1-tab">
+                        <div class="product-slider our-products-slider-3 slider-navigation-2">
+                            @foreach (var item in homePageModel._featureOurChoice)
+                            {
+                                <div class="product-slider-col">
+                                    <!-- Single Product -->
+                                    <article class="hoproduct">
+                                        <div class="hoproduct-image">
+                                            <a class="hoproduct-thumb" href="/product/index?id=@item.Product_Id&title=@item.Product.Product_Title">
+                                                <img class="hoproduct-frontimage" src="../../@item.Product.ProductBanner.Where(m => m.Product_Banner_Default == 1).FirstOrDefault().Product_Banner_Photo" alt="product image">
+                                                <img class="hoproduct-backimage" src="../../@item.Product.ProductBanner.Where(m => m.Product_Banner_Default != 1).FirstOrDefault().Product_Banner_Photo" alt="product image">
+                                            </a>
+                                            @if (@item.Product.Product_Discount != 0)
+                                            {
+                                                <ul class="hoproduct-flags">
+                                                    <li class="flag-pack">New</li>
+                                                    <li class="flag-discount">-@Math.Round(item.Product.Product_Discount) %</li>
+                                                </ul>
+                                            }
+                                        </div>
+                                        <div class="hoproduct-content">
+                                            <h5 class="hoproduct-title">
+                                                <a href="/product/index?id=@item.Product_Id&title=@item.Product.Product_Title">
+                                                    @item.Product.Product_Title
+                                                </a>
+                                            </h5>
+                                            <div class="hoproduct-rattingbox">
+                                                <div class="rattingbox">
+                                                    @if (item.Product.Store_Rating == 1)
+                                                    {
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                    }
+                                                    else if (item.Product.Store_Rating == 2)
+                                                    {
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                    }
+                                                    else if (item.Product.Store_Rating == 3)
+                                                    {
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                    }
+                                                    else if (item.Product.Store_Rating == 4)
+                                                    {
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                    }
+                                                    else if (item.Product.Store_Rating == 5)
+                                                    {
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div class="hoproduct-pricebox">
+                                                <div class="pricebox">
+                                                    <del class="oldprice">&#x20B9; @Math.Round(item.Product.Product_Mkt_Price)</del>
+                                                    <span class="price">&#x20B9; @Math.Round(item.Product.Product_Our_Price)</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </article>
+                                    <!--// Single Product -->
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+                @if (homePageModel._featureBest != null && homePageModel._featureBest.Count > 0)
+                {
+                    <div class="tab-pane fade" id="bstab2-area2" role="tabpanel" aria-labelledby="bstab2-area2-tab">
+                        <div class="product-slider our-products-slider slider-navigation-2">
+
+                            @foreach (var item in homePageModel._featureBest)
+                            {
+                                <div class="product-slider-col">
+                                    <!-- Single Product -->
+                                    <article class="hoproduct">
+                                        <div class="hoproduct-image">
+                                            <a class="hoproduct-thumb" href="/product/index?id=@item.Product_Id&title=@item.Product.Product_Title">
+                                                <img class="hoproduct-frontimage" src="../../@item.Product.ProductBanner.Where(m => m.Product_Banner_Default == 1).FirstOrDefault().Product_Banner_Photo" alt="product image">
+                                                <img class="hoproduct-backimage" src="../../@item.Product.ProductBanner.Where(m => m.Product_Banner_Default != 1).FirstOrDefault().Product_Banner_Photo" alt="product image">
+                                            </a>
+                                            @if (@item.Product.Product_Discount != 0)
+                                            {
+                                                <ul class="hoproduct-flags">
+                                                    <li class="flag-pack">New</li>
+                                                    <li class="flag-discount">-@Math.Round(item.Product.Product_Discount) %</li>
+                                                </ul>
+                                            }
+                                        </div>
+                                        <div class="hoproduct-content">
+                                            <h5 class="hoproduct-title">
+                                                <a href="/product/index?id=@item.Product_Id&title=@item.Product.Product_Title">
+                                                    @item.Product.Product_Title
+                                                </a>
+                                            </h5>
+                                            <div class="hoproduct-rattingbox">
+                                                <div class="rattingbox">
+                                                    @if (item.Product.Store_Rating == 1)
+                                                    {
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                    }
+                                                    else if (item.Product.Store_Rating == 2)
+                                                    {
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                    }
+                                                    else if (item.Product.Store_Rating == 3)
+                                                    {
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                    }
+                                                    else if (item.Product.Store_Rating == 4)
+                                                    {
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                    }
+                                                    else if (item.Product.Store_Rating == 5)
+                                                    {
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div class="hoproduct-pricebox">
+                                                <div class="pricebox">
+                                                    <del class="oldprice">&#x20B9; @Math.Round(item.Product.Product_Mkt_Price)</del>
+                                                    <span class="price">&#x20B9; @Math.Round(item.Product.Product_Our_Price)</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </article>
+                                    <!--// Single Product -->
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                }
+                @if (homePageModel._featureHot != null && homePageModel._featureHot.Count > 0)
+                {
+                    <div class="tab-pane fade" id="bstab2-area3" role="tabpanel" aria-labelledby="bstab2-area3-tab">
+                        <div class="product-slider our-products-slider slider-navigation-2">
+
+                            @foreach (var item in homePageModel._featureHot)
+                            {
+                                <div class="product-slider-col">
+                                    <!-- Single Product -->
+                                    <article class="hoproduct">
+                                        <div class="hoproduct-image">
+                                            <a class="hoproduct-thumb" href="/product/index?id=@item.Product_Id&title=@item.Product.Product_Title">
+                                                <img class="hoproduct-frontimage" src="../../@item.Product.ProductBanner.Where(m => m.Product_Banner_Default == 1).FirstOrDefault().Product_Banner_Photo" alt="product image">
+                                                <img class="hoproduct-backimage" src="../../@item.Product.ProductBanner.Where(m => m.Product_Banner_Default != 1).FirstOrDefault().Product_Banner_Photo" alt="product image">
+                                            </a>
+                                            @if (@item.Product.Product_Discount != 0)
+                                            {
+                                                <ul class="hoproduct-flags">
+                                                    <li class="flag-pack">New</li>
+                                                    <li class="flag-discount">-@Math.Round(item.Product.Product_Discount) %</li>
+                                                </ul>
+                                            }
+                                        </div>
+                                        <div class="hoproduct-content">
+                                            <h5 class="hoproduct-title">
+                                                <a href="/product/index?id=@item.Product_Id&title=@item.Product.Product_Title">
+                                                    @item.Product.Product_Title
+                                                </a>
+                                            </h5>
+                                            <div class="hoproduct-rattingbox">
+                                                <div class="rattingbox">
+                                                    @if (item.Product.Store_Rating == 1)
+                                                    {
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                    }
+                                                    else if (item.Product.Store_Rating == 2)
+                                                    {
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                    }
+                                                    else if (item.Product.Store_Rating == 3)
+                                                    {
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                    }
+                                                    else if (item.Product.Store_Rating == 4)
+                                                    {
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                    }
+                                                    else if (item.Product.Store_Rating == 5)
+                                                    {
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div class="hoproduct-pricebox">
+                                                <div class="pricebox">
+                                                    <del class="oldprice">&#x20B9; @Math.Round(item.Product.Product_Mkt_Price)</del>
+                                                    <span class="price">&#x20B9; @Math.Round(item.Product.Product_Our_Price)</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </article>
+                                    <!--// Single Product -->
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
+<!--// Our Products Area -->
+<!-- Banner Area -->
+@if (homePageModel._ads != null && homePageModel._ads.Count > 0)
+{
+    foreach (var item in homePageModel._ads)
+    {
+        if (item.Ads_Type == "Advertisement 6")
+        {
+            <div class="banner-area">
+                <div class="container">
+                    <div class="imgbanner imgbanner-2 mt-30">
+                        <a href="@item.Ads_RedirectUrl">
+                            <img src="../../@item.Ads_Banner_Or_Source" alt="banner">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+}
+<!--// Banner Area -->
+<!-- Newarrival, Best seller & Features Product -->
+@if (homePageModel._prdeight != null && homePageModel._prdeight.Count > 0)
+{
+    <div class="ho-section newarrival-bestseller-featured-product mtb-30">
+        <div class="container">
+            <div class="section-title-2">
+                <ul class="nav" id="bstab3" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="bstab3-area1-tab" data-toggle="tab" href="#bstab3-area1"
+                           role="tab" aria-controls="bstab3-area1" aria-selected="true">TOP PRODUCTS</a>
+                    </li>
+                </ul>
+            </div>
+            @if (homePageModel._prdeight != null && homePageModel._prdeight.Count > 0)
+            {
+                <div class="tab-content" id="bstab3-ontent">
+                    <div class="tab-pane fade show active" id="bstab3-area1" role="tabpanel" aria-labelledby="bstab3-area1-tab">
+                        <div class="product-slider new-best-featured-slider slider-navigation-2">
+                            @foreach (var item in homePageModel._prdeight)
+                            {
+                                <div class="product-slider-col">
+                                    <!-- Single Product -->
+                                    <article class="hoproduct">
+                                        <div class="hoproduct-image">
+                                            <a class="hoproduct-thumb" href="/product/index?id=@item.Product_Id&title=@item.Product.Product_Title">
+                                                <img class="hoproduct-frontimage" src="../../@item.Product.ProductBanner.Where(m => m.Product_Banner_Default == 1).FirstOrDefault().Product_Banner_Photo" alt="product image">
+                                                <img class="hoproduct-backimage" src="../../@item.Product.ProductBanner.Where(m => m.Product_Banner_Default != 1).FirstOrDefault().Product_Banner_Photo" alt="product image">
+                                            </a>
+                                            @if (@item.Product.Product_Discount != 0)
+                                            {
+                                                <ul class="hoproduct-flags">
+                                                    <li class="flag-pack">New</li>
+                                                    <li class="flag-discount">-@Math.Round(item.Product.Product_Discount) %</li>
+                                                </ul>
+                                            }
+                                        </div>
+                                        <div class="hoproduct-content">
+                                            <h5 class="hoproduct-title">
+                                                <a href="/product/index?id=@item.Product_Id&title=@item.Product.Product_Title">
+                                                    @item.Product.Product_Title
+                                                </a>
+                                            </h5>
+                                            <div class="hoproduct-rattingbox">
+                                                <div class="rattingbox">
+                                                    @if (item.Product.Store_Rating == 1)
+                                                    {
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                    }
+                                                    else if (item.Product.Store_Rating == 2)
+                                                    {
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                    }
+                                                    else if (item.Product.Store_Rating == 3)
+                                                    {
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                    }
+                                                    else if (item.Product.Store_Rating == 4)
+                                                    {
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                    }
+                                                    else if (item.Product.Store_Rating == 5)
+                                                    {
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                        <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div class="hoproduct-pricebox">
+                                                <div class="pricebox">
+                                                    <del class="oldprice">&#x20B9; @Math.Round(item.Product.Product_Mkt_Price)</del>
+                                                    <span class="price">&#x20B9; @Math.Round(item.Product.Product_Our_Price)</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </article>
+                                    <!--// Single Product -->
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
+<!--// Newarrival, Best seller & Features Product -->
+<!-- Brand Logo Area -->
+<div class="ho-section brand-logos-area bg-grey">
+    <div class="container">
+        <div class="section-title">
+            <h3>PROUD PARTNERS</h3>
+        </div>
+        @if (homePageModel._stores != null && homePageModel._stores.Count > 0)
+        {
+            <div class="brand-logo-slider slider-navigation-3">
+                @foreach (var item in homePageModel._stores)
+                {
+                    <div class="brandlogo">
+                        <a href="/home/ProductByStore?storeId=@item.Store_Id&title=@item.Store_Name">
+                            <img src="../@item.Store_Logo" alt="brand logo">
+                        </a>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>
+<!--// Brand Logo Area -->
+<!-- Latest Blog Area -->
+<div class="ho-section latest-blog-area bg-white pt-40">
+    <div class="container">
+        <div class="section-title">
+            <h3>LATEST ADDITION</h3>
+        </div>
+        <div class="product-slider blogitem-slider slider-navigation-2">
+            <!-- Single Blog -->
+            @if (homePageModel._recentAddition != null && homePageModel._recentAddition.Count > 0)
+            {
+                foreach (var item in homePageModel._recentAddition)
+                {
+                    <div class="product-slider-col">
+                        <article class="blogitem">
+                            <div class="blogitem-thumb">
+                                <a href="/product/index?id=@item.Product_Id&title=@item.Product_Title">
+                                    <img class="hoproduct-frontimage" src="../../@item.ProductBanner.Where(m => m.Product_Banner_Default == 1).FirstOrDefault().Product_Banner_Photo" alt="product image">
+                                </a>
+                            </div>
+                            <div class="blogitem-content">
+                                <h4 class="blogitem-title">
+                                    <a href="/product/index?id=@item.Product_Id&title=@item.Product_Title">
+                                        @item.Product_Title
+                                    </a>
+                                </h4>
+                                <div class="blogitem-meta">
+                                    <span class="blogitem-date">
+                                        <div class="hoproduct-rattingbox">
+                                            <div class="rattingbox">
+                                                @if (item.Store_Rating == 1)
+                                                {
+                                                    <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                }
+                                                else if (item.Store_Rating == 2)
+                                                {
+                                                    <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                    <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                }
+                                                else if (item.Store_Rating == 3)
+                                                {
+                                                    <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                    <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                    <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                }
+                                                else if (item.Store_Rating == 4)
+                                                {
+                                                    <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                    <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                    <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                    <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                }
+                                                else if (item.Store_Rating == 5)
+                                                {
+                                                    <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                    <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                    <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                    <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                    <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                }
+                                            </div>
+                                        </div>
+                                    </span>
+                                    <span class="blogitem-author">
+                                        <del class="oldprice">&#x20B9; @Math.Round(item.Product_Mkt_Price)</del>
+                                        <span class="price">&#x20B9; @Math.Round(item.Product_Our_Price)</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                }
+            }
+            <!--// Single Blog -->
+        </div>
+    </div>
+</div>
+<!--// Latest Blog Area -->
+<!-- Newsletter Area -->
+<div class="ho-section newsletter-area bg-grey ptb-50">
+    <div class="container">
+        <div class="newsletter">
+            <div class="newsletter-title">
+                <h2>Subscribe to our <span>Newsletter!</span></h2>
+            </div>
+            <div class="newsletter-content">
+                <form action="/home/subscribe/" class="newsletter-form">
+                    <input type="email" name="emailid" autocomplete="off" placeholder="Your email address..." required />
+                    <button type="submit">Subscribe</button>
+                </form>
+                <!-- mailchimp-alerts start -->
+                <div class="mailchimp-alerts text-centre">
+                    <div class="mailchimp-submitting"></div><!-- mailchimp-submitting end -->
+                    <div class="mailchimp-success"></div><!-- mailchimp-success end -->
+                    <div class="mailchimp-error"></div><!-- mailchimp-error end -->
+                </div><!-- mailchimp-alerts end -->
+            </div>
+            <div class="newsletter-socialicons socialicons socialicons-radial">
+                @if (homePageModel._social != null && homePageModel._social.Count > 0)
+                {
+                    <ul>
+                        @foreach (var item in homePageModel._social)
+                        {
+                            <li><a href="@item.Scl_Ntk_URL" target="_blank"><img src="../../@item.Scl_Ntk_Icon" alt="" /></a></li>
+                        }
+                    </ul>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<!--// Newsletter Area -->

@@ -1,0 +1,115 @@
+﻿@model Rachna.Teracotta.Project.Source.Models.Customers
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_productlayout.cshtml";
+}
+
+
+<div class="breadcrumb-area bg-grey">
+    <div class="container">
+        <div class="ho-breadcrumb">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li>Login/Register</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="my-account-area ptb-30">
+    <div class="container">
+        <div class="row">
+            <!-- Login Form -->
+            <div class="col-lg-6">
+                @if (ViewBag.Message != null)
+                {
+                    <blockquote>
+                        <label style="color:red;font-weight:bold">@ViewBag.Message</label>
+                    </blockquote>
+                }
+                <div class="login-form-wrapper">
+
+                    <form action="/user/loginuser" class="ho-form ho-form-boxed">
+                        <div class="ho-form-inner">
+                            <div class="single-input">
+                                <label for="Customers_EmailId">Username or email address *</label>
+                                <input type="text" id="Customers_EmailId" required name="Customers_EmailId" value="@Model.Customers_EmailId">
+                            </div>
+                            <div class="single-input">
+                                <label for="Customers_Password">Password *</label>
+                                <input type="password" id="Customers_Password" required name="Customers_Password">
+                            </div>
+                            <div class="single-input">
+                                <button type="submit" class="ho-button ho-button-dark mr-3">
+                                    <span>Login</span>
+                                </button>
+                                <div class="checkbox-input">
+                                    <input type="checkbox" name="login-form-remember" id="login-form-remember">
+                                    <label for="login-form-remember">Remember me</label>
+                                </div>
+                            </div>
+                            <div class="single-input">
+                                <a href="#">Lost your password?</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--// Login Form -->
+            <!-- Register Form -->
+            <div class="col-lg-6 mt-30 mt-lg-0">
+                <div class="login-form-wrapper">
+                    <form action="/user/signup/" class="ho-form ho-form-boxed">
+                        <div class="ho-form-inner">
+                            <div class="single-input">
+                                <label for="Customers_FullName">Username</label>
+                                <input type="text" id="Customers_FullName" name="Customers_FullName" value="@Model.Customers_FullName" required>
+                            </div>
+                            <div class="single-input">
+                                <label for="Customers_EmailId">Email address</label>
+                                <input type="email" id="Customers_EmailId" name="Customers_EmailId" value="@Model.Customers_EmailId" required>
+                            </div>
+                            <div class="single-input">
+                                <label for="Customers_Phone">Phone Number</label>
+                                <input type="number" id="Customers_Phone" name="Customers_Phone" value="@Model.Customers_Phone" required>
+                            </div>
+                            <div class="single-input">
+                                <label for="Customers_Password">Password</label>
+                                <input type="password" id="Customers_Password" name="Customers_Password" required>
+                            </div>
+                            <div class="single-input">
+                                <label for="ConfirmPassword">Confirm Password</label>
+                                <input type="password" id="ConfirmPassword" name="ConfirmPassword" required>
+                            </div>
+                            <div class="single-input">
+                                <button type="submit" class="ho-button ho-button-dark btnLoginCustomer">
+                                    <span>Register</span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--// Register Form -->
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var password = document.getElementById("password")
+        , confirm_password = document.getElementById("confirm_password");
+
+    function validatePassword() {
+        if (password.value != confirm_password.value) {
+            confirm_password.setCustomValidity("Passwords Don't Match");
+        } else {
+            confirm_password.setCustomValidity('');
+        }
+    }
+
+    password.onchange = validatePassword;
+    confirm_password.onkeyup = validatePassword;
+</script>
+

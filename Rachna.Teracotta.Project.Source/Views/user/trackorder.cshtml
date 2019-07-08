@@ -1,0 +1,148 @@
+﻿@{
+    ViewBag.Title = "My Orders";
+    Layout = "~/Views/Shared/_productlayout.cshtml";
+
+    Rachna.Teracotta.Project.Source.Models.Order _orders = null;
+
+    using (var ctx = new Rachna.Teracotta.Project.Source.App_Data.RachnaDBContext())
+    {
+        _orders = ctx.Orders.Include("OrderHistory").Include("PaymentMethod").ToList()
+            .Where(m => m.Order_Id == Convert.ToInt32(Request.QueryString["OrderId"].ToString())).FirstOrDefault();
+    }
+}
+
+<!-- Breadcrumb Area -->
+<div class="breadcrumb-area bg-grey">
+    <div class="container">
+        <div class="ho-breadcrumb">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><strong>Your Order Detail</strong></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!--// Breadcrumb Area -->
+<div class="my-account-area ptb-30">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row shop-tracking-status">
+
+                    <div class="col-md-12">
+                        <div class="well">
+                            <div class="order-status">
+                                <div class="order-status-timeline">
+                                    <!-- class names: c0 c1 c2 c3 and c4 -->
+                                    @if (_orders.Order_Status == Rachna.Teracotta.Project.Source.Entity.eOrderStatus.Approved.ToString())
+                                    {
+                                        <div class="order-status-timeline-completion c1"></div>
+                                    }
+                                    else if (_orders.Order_Status == Rachna.Teracotta.Project.Source.Entity.eOrderStatus.Packed.ToString())
+                                    {
+                                        <div class="order-status-timeline-completion c2"></div>
+                                    }
+                                    else if (_orders.Order_Status == Rachna.Teracotta.Project.Source.Entity.eOrderStatus.Shipped.ToString() ||
+                                        _orders.Order_Status == Rachna.Teracotta.Project.Source.Entity.eOrderStatus.Delevery.ToString() ||
+                                        _orders.Order_Status == Rachna.Teracotta.Project.Source.Entity.eOrderDeliveryStatus.OutForDelivery.ToString())
+                                    {
+                                        <div class="order-status-timeline-completion c3"></div>
+                                    }
+                                    else if (_orders.Order_Status == Rachna.Teracotta.Project.Source.Entity.eOrderDeliveryStatus.DelveryCompleted.ToString())
+                                    {
+                                        <div class="order-status-timeline-completion c4"></div>
+                                    }
+                                    else
+                                    {
+
+                                    }
+                                </div>
+                                <div class="image-order-status image-order-status-new active img-circle">
+                                    <span class="status">Accepted</span>
+                                    <div class="icon"></div>
+                                </div>
+                                <div class="image-order-status image-order-status-active active img-circle">
+                                    <span class="status">Packed</span>
+                                    <div class="icon"></div>
+                                </div>
+                                <div class="image-order-status image-order-status-intransit active img-circle">
+                                    <span class="status">Shipped</span>
+                                    <div class="icon"></div>
+                                </div>
+                                <div class="image-order-status image-order-status-delivered active img-circle">
+                                    <span class="status">Out For Delievery</span>
+                                    <div class="icon"></div>
+                                </div>
+                                <div class="image-order-status image-order-status-completed active img-circle">
+                                    <span class="status">Delievered</span>
+                                    <div class="icon"></div>
+                                </div>
+                            </div>
+
+                            <h4 style="margin-top:20px">Your order status:</h4>
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <span class="prefix"><strong>Product:</strong></span>
+                                    <span class="label label-success">@_orders.Product_Title</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <span class="prefix"><strong>Date created:</strong></span>
+                                    <span class="label label-success">@_orders.Order_Date.ToString("D")</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <span class="prefix"><strong>Last update:</strong></span>
+                                    <span class="label label-success">@_orders.Order_UpdateDate.ToString("D")</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <span class="prefix"><strong>Payment Mode:</strong></span>
+                                    <span class="label label-success">@_orders.PaymentMethod.Title</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <span class="prefix"><strong>Delivery expected by:</strong></span>
+                                    <span class="label label-success"> @_orders.Order_Delievery_Date.ToString("D")</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <span class="prefix"><strong>Current Status:</strong></span>
+                                    <span class="label label-success">@_orders.Order_Status</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <span class="prefix"><strong>Complete Order Detail:</strong></span>
+                                    <span class="label label-success"><a data-toggle="modal" data-target="#mdlOrderStatus" style="color:darkblue;cursor:pointer">Click Here to view Complete Detail</a></span>
+                                </li>
+                                @if (_orders.Order_Status == "Placed" || _orders.Order_Status == "Approved" || _orders.Order_Status == "Shipped" || _orders.Order_Status == "Dispatched")
+                                {
+                                    <li class="list-group-item">
+                                        <a href="/user/cancelorder?orderId=@_orders.Order_Id" class="btn btn-primary">Cancel Order</a>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="mdlOrderStatus" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Complete Detail</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <ul class="list-group">
+                    @foreach (var item in _orders.OrderHistory)
+                    {
+                        <li class="list-group-item">
+                            <span class="prefix"><strong>@item.OrderHistory_Status&nbsp;:</strong></span>
+                            <span class="label label-success">@item.OrderHistory_Description&nbsp; on &nbsp; @item.OrderHistory_CreatedDate.ToString("D")</span>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

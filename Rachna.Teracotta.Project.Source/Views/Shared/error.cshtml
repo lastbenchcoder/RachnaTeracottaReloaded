@@ -1,0 +1,92 @@
+﻿<!doctype html>
+<html dir="ltr" lang="en-US">
+<head>
+    <title>Rachna's Store - @ViewBag.Title</title>
+    <link rel="icon" href="../../content/favicon.png" type="image/x-icon" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="../../appfiles/frontend2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../appfiles/frontend2/css/plugins.css">
+    @System.Web.Optimization.Styles.Render("~/bundles/stylesTheme2")
+</head>
+<body>
+    <!--[if lte IE 9]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+    <![endif]-->
+    <!-- Add your site or application content here -->
+    <!-- Wrapper -->
+    <div id="wrapper" class="wrapper">
+
+        <!-- Header -->
+        <header class="header">
+
+            <!-- Header Middle Area -->
+            <div class="header-middle bg-theme">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-3 col-md-6 col-sm-6 order-1 order-lg-1">
+                            <a href="/" class="header-logo">
+                                <img src="../../content/logo.png" alt="logo">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--// Header Middle Area -->
+            <!-- Header Bottom Area -->
+            <div class="header-bottom bg-theme">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-10 d-none d-lg-block">
+                            <!-- Navigation -->
+                            <nav class="ho-navigation">
+                                <ul>
+                                    <li>
+                                        <a href="/">Home</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                            <!--// Navigation -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--// Header Bottom Area -->
+
+        </header>
+        <!--// Header -->
+        <!-- Breadcrumb Area -->
+        <div class="breadcrumb-area bg-grey">
+            <div class="container">
+                <div class="ho-breadcrumb">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li>@ViewBag.Title</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--// Breadcrumb Area -->
+        <!-- Page Conttent -->
+        <main class="page-content">
+            @RenderBody()
+        </main>
+        <!--// Page Conttent -->
+        <!-- Footer -->
+        <footer class="footer bg-white">
+
+            <!-- Footer Bottom -->
+            <div class="footer-bottomarea">
+                <div class="container">
+                    <div class="footer-copyright">
+                        <p class="copyright">Copyright &copy; <a href="/">@System.Configuration.ConfigurationSettings.AppSettings["AppName"].ToString() @DateTime.Now.Year</a> . All Rights Reserved</p>
+                    </div>
+                </div>
+            </div>
+            <!--// Footer Bottom -->
+
+        </footer>
+        <!--// Footer -->
+    </div>
+    @System.Web.Optimization.Scripts.Render("~/bundles/scriptsTheme2");
+</body>
+</html>

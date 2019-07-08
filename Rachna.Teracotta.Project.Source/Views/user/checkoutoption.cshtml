@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "Checkout Option";
+    Layout = "~/Views/Shared/_productlayout.cshtml";
+}
+
+<div class="breadcrumb-area bg-grey">
+    <div class="container">
+        <div class="ho-breadcrumb">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li>Checkout Option</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="my-account-area ptb-30">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table total-table">
+                    <tbody>
+                        <tr>
+                            <td class="total-table-title"><h4>Login or Register:</h4></td>
+                            <td><a href="/user/login">SignIn/SignUp</a></td>
+                        </tr>
+                        <tr>
+                            <td class="total-table-title"><h4>Guest Checkout:</h4></td>
+                            <td><a href="/user/guestcheckin">CheckIn As Guest</a></td>
+                        </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,406 @@
+﻿@{
+    /**/
+
+
+    List<Rachna.Teracotta.Project.Source.Models.ProductFeatures> _featureBest = null;
+    List<Rachna.Teracotta.Project.Source.Models.ProductFeatures> _featureOurChoice = null;
+    List<Rachna.Teracotta.Project.Source.Models.Categories> _categories = null;
+    List<Rachna.Teracotta.Project.Source.Models.SocialNetworking> _socialNetworking = null;
+    List<Rachna.Teracotta.Project.Source.Models.Ads> _ads = null;
+    using (var ctx = new Rachna.Teracotta.Project.Source.App_Data.RachnaDBContext())
+    {
+        _featureBest = ctx.ProductFeature.Where(m => m.Product_Feature_Type.ToLower() == Rachna.Teracotta.Project.Source.Entity.eProductFeature.Best.ToString()).ToList();
+        foreach (var item in _featureBest)
+        {
+            item.Product = ctx.Product.Where(m => m.Product_Id == item.Product_Id).FirstOrDefault();
+            item.Product.ProductBanner = ctx.ProductBanner.Where(m => m.Product_Id == item.Product_Id).ToList();
+        }
+
+        _featureOurChoice = ctx.ProductFeature.Where(m => m.Product_Feature_Type.ToLower() == Rachna.Teracotta.Project.Source.Entity.eProductFeature.OurChoice.ToString()).ToList();
+        foreach (var item in _featureOurChoice)
+        {
+            item.Product = ctx.Product.Where(m => m.Product_Id == item.Product_Id).FirstOrDefault();
+            item.Product.ProductBanner = ctx.ProductBanner.Where(m => m.Product_Id == item.Product_Id).ToList();
+        }
+
+        _categories = ctx.Category.Where(m => m.Category_Status == Rachna.Teracotta.Project.Source.Entity.eStatus.Active.ToString()).ToList();
+        foreach (var item in _categories)
+        {
+            item.SubCategory = ctx.SubCategory.Where(m => m.Category_Id == item.Category_Id && item.Category_Status == Rachna.Teracotta.Project.Source.Entity.eStatus.Active.ToString()).ToList();
+        }
+        _socialNetworking = ctx.SocialNetworking.Where(m => m.Scl_Ntk_Status == Rachna.Teracotta.Project.Source.Entity.eStatus.Active.ToString()).ToList();
+        _ads = ctx.Advertisement.ToList();
+    }
+
+    ViewBag.Title = "ProductByCategory";
+    Layout = "~/Views/Shared/_productlayout.cshtml";
+}
+
+<!-- Breadcrumb Area -->
+<div class="breadcrumb-area bg-grey">
+    <div class="container">
+        <div class="ho-breadcrumb">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li>Search Result</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!--// Breadcrumb Area -->
+<!-- Page Conttent -->
+<main class="page-content">
+    <!-- Shop Page Area -->
+    <div class="shop-page-area bg-white ptb-30">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-9 order-1 order-lg-2">
+
+                    <div class="banner-area">
+                        <div class="imgbanner imgbanner-2">
+                            <div class="input-group add-on" style="width:100%">
+                                <input class="form-control txtSearchBox" placeholder="Search" name="srch-term" id="srch-term" type="text" style="width:90%">
+                                <button class="btn btn-primary btnSearchProduct" type="submit">Search</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="shop-page-products list-view-active mt-30">
+                        <div class="row no-gutters">
+                            <input type="hidden" id="hdSearchKey" value="@ViewBag.SearchKey" />
+                            <input type="hidden" id="hdnLoadmore" />
+                            <h5>There are <label id="lblCountProduct"></label> items found for your search : <label id="lblSearchProduct"></label></h5>
+                            <!-- Start Product List -->
+                            <div id="RachnaContainer"></div>
+                            <script id="RachnaTemplate" type="text/x-jQuery-tmpl">
+                                <article class="hoproduct">
+                                    <div class="hoproduct-image">
+                                        <a class="hoproduct-thumb" href="/product/index?id=${Id}">
+                                            <img class="hoproduct-frontimage" src="../${Banner1}"
+                                                 alt="product image">
+                                            <img class="hoproduct-backimage" src="../${Banner2}"
+                                                 alt="product image">
+                                        </a>
+                                        <ul class="hoproduct-flags">
+                                            <li class="flag-pack">New</li>
+                                            <li class="flag-discount">-${DiscountPrice}%</li>
+                                        </ul>
+                                    </div>
+                                    <div class="hoproduct-content">
+                                        <h5 class="hoproduct-title">
+                                            <a href="/product/index?id=${Id}">
+                                                ${Title}
+                                            </a>
+                                        </h5>
+                                        <div class="hoproduct-rattingbox">
+                                            <div class="rattingbox">
+                                                {{if Rating == '1'}}
+                                                <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                {{else Rating == '2'}}
+                                                <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                {{else Rating == '3'}}
+                                                <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                {{else Rating == '4'}}
+                                                <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                {{else}}
+                                                <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                {{/if}}
+                                            </div>
+                                        </div>
+                                        <div class="hoproduct-pricebox">
+                                            <div class="pricebox">
+                                                <del class="oldprice">&#x20B9;${TotalPrice}</del>
+                                                <span class="price">&#x20B9;${TotalPrice}</span>
+                                            </div>
+                                        </div>
+                                        <p class="hoproduct-content-description">
+                                            {{html Description}}
+                                        </p>
+                                    </div>
+                                </article>
+                            </script>
+                        </div>
+                        <div class="cr-pagination pt-30">
+                            <input type="button" id="btnLoadMore" value="Load More..." class="btn btn-darkblue" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 order-2 order-lg-1">
+                    <div class="shop-widgets">
+                        <div class="single-widget widget-categories">
+                            <h5 class="widget-title">All Categories</h5>
+                            <ul class="categories-main">
+                                @{
+                                    int aa = 1;
+                                    foreach (var item in _categories)
+                                    {
+                                        <li>
+                                            <a role="button" data-toggle="collapse" href="#link_@aa" aria-expanded="false" aria-controls="link1">@item.Category_Title<span>@item.SubCategory.Count()</span></a>
+                                            @if (item.SubCategory.Count > 0)
+                                            {
+                                                <ul class="collapse" id="link_@aa">
+                                                    @foreach (var item1 in item.SubCategory)
+                                                    {
+                                                        <li><a class="hrfRachnaSubCatId" catId="@item1.SubCategory_Id" style="cursor:pointer">@item1.SubCategory_Title</a></li>
+                                                    }
+                                                </ul>
+                                            }
+                                        </li>
+                                        aa = aa + 1;
+                                    }
+                                }
+                            </ul>
+                        </div>
+
+                        <!-- Recommended Product -->
+                        @if (_featureOurChoice != null && _featureOurChoice.Count > 0)
+                        {
+                            <div class="single-widget widget-recommended-products mt-30">
+                                <div class="section-title">
+                                    <h3>OUR RECOMMENDED</h3>
+                                </div>
+                                <div class="recommended-products-slider-2 slider-navigation-2 slider-navigation-2-m0">
+                                    <div class="product-slider-col">
+                                        <!-- Single Product -->
+                                        @foreach (var item in _featureOurChoice)
+                                        {
+                                            <article class="hoproduct hoproduct-4">
+                                                <div class="hoproduct-image">
+                                                    <a class="hoproduct-thumb" href="/product/index?id=@item.Product_Id&title=@item.Product.Product_Title">
+                                                        <img class="hoproduct-frontimage" src="../../@item.Product.ProductBanner.Where(m => m.Product_Banner_Default == 1).FirstOrDefault().Product_Banner_Photo" alt="product image">
+                                                        <img class="hoproduct-backimage" src="../../@item.Product.ProductBanner.Where(m => m.Product_Banner_Default != 1).FirstOrDefault().Product_Banner_Photo" alt="product image">
+                                                    </a>
+                                                </div>
+                                                <div class="hoproduct-content">
+                                                    <h5 class="hoproduct-title">
+                                                        <a href="/product/index?id=@item.Product_Id&title=@item.Product.Product_Title">
+                                                            @item.Product.Product_Title
+                                                        </a>
+                                                    </h5>
+                                                    <div class="hoproduct-rattingbox">
+                                                        <div class="rattingbox">
+                                                            @if (item.Product.Store_Rating == 1)
+                                                            {
+                                                                <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                            }
+                                                            else if (item.Product.Store_Rating == 2)
+                                                            {
+                                                                <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                                <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                            }
+                                                            else if (item.Product.Store_Rating == 3)
+                                                            {
+                                                                <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                                <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                                <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                            }
+                                                            else if (item.Product.Store_Rating == 4)
+                                                            {
+                                                                <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                                <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                                <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                                <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                            }
+                                                            else if (item.Product.Store_Rating == 5)
+                                                            {
+                                                                <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                                <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                                <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                                <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                                <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                    <div class="hoproduct-pricebox">
+                                                        <div class="pricebox">
+                                                            <del class="oldprice">&#x20B9; @Math.Round(item.Product.Product_Mkt_Price)</del>
+                                                            <span class="price">&#x20B9; @Math.Round(item.Product.Product_Our_Price)</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </article>
+                                        }
+                                        <!--// Single Product -->
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        <!--// Recommended Product -->
+                        @if (_ads != null && _ads.Count > 0)
+                        {
+                            foreach (var item in _ads)
+                            {
+                                if (item.Ads_Type == "Advertisement 7")
+                                {
+                                    <div class="imgbanner mt-30">
+                                        <a href="@item.Ads_RedirectUrl">
+                                            <img src="../../@item.Ads_Banner_Or_Source" alt="banner">
+                                        </a>
+                                    </div>
+                                }
+                            }
+                        }
+                        <!-- Best Product -->
+                        @if (_featureBest != null && _featureBest.Count > 0)
+                        {
+                            <div class="single-widget widget-recommended-products mt-30">
+                                <div class="section-title">
+                                    <h3>OUR BEST</h3>
+                                </div>
+                                <div class="recommended-products-slider-2 slider-navigation-2 slider-navigation-2-m0">
+                                    <div class="product-slider-col">
+                                        <!-- Single Product -->
+                                        @foreach (var item in _featureBest)
+                                        {
+                                            <article class="hoproduct hoproduct-4">
+                                                <div class="hoproduct-image">
+                                                    <a class="hoproduct-thumb" href="/product/index?id=@item.Product_Id&title=@item.Product.Product_Title">
+                                                        <img class="hoproduct-frontimage" src="../../@item.Product.ProductBanner.Where(m => m.Product_Banner_Default == 1).FirstOrDefault().Product_Banner_Photo" alt="product image">
+                                                        <img class="hoproduct-backimage" src="../../@item.Product.ProductBanner.Where(m => m.Product_Banner_Default != 1).FirstOrDefault().Product_Banner_Photo" alt="product image">
+                                                    </a>
+                                                </div>
+                                                <div class="hoproduct-content">
+                                                    <h5 class="hoproduct-title">
+                                                        <a href="/product/index?id=@item.Product_Id&title=@item.Product.Product_Title">
+                                                            @item.Product.Product_Title
+                                                        </a>
+                                                    </h5>
+                                                    <div class="hoproduct-rattingbox">
+                                                        <div class="rattingbox">
+                                                            @if (item.Product.Store_Rating == 1)
+                                                            {
+                                                                <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                            }
+                                                            else if (item.Product.Store_Rating == 2)
+                                                            {
+                                                                <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                                <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                            }
+                                                            else if (item.Product.Store_Rating == 3)
+                                                            {
+                                                                <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                                <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                                <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                            }
+                                                            else if (item.Product.Store_Rating == 4)
+                                                            {
+                                                                <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                                <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                                <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                                <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                            }
+                                                            else if (item.Product.Store_Rating == 5)
+                                                            {
+                                                                <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                                <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                                <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                                <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                                <span class="active"><i class="ion ion-ios-star"></i></span>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                    <div class="hoproduct-pricebox">
+                                                        <div class="pricebox">
+                                                            <del class="oldprice">&#x20B9; @Math.Round(item.Product.Product_Mkt_Price)</del>
+                                                            <span class="price">&#x20B9; @Math.Round(item.Product.Product_Our_Price)</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </article>
+                                        }
+                                        <!--// Single Product -->
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        <!--// Best Product -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--// Shop Page Area -->
+    <!-- Newsletter Area -->
+    <div class="ho-section newsletter-area bg-grey ptb-50">
+        <div class="container">
+            <div class="newsletter">
+                <div class="newsletter-title">
+                    <h2>Subscribe to our <span>Newsletter!</span></h2>
+                </div>
+                <div class="newsletter-content">
+                    <form action="/home/subscribe/" class="newsletter-form">
+                        <input type="email" name="emailid" autocomplete="off" placeholder="Your email address..." required />
+                        <button type="submit">Subscribe</button>
+                    </form>
+                    <!-- mailchimp-alerts start -->
+                    <div class="mailchimp-alerts text-centre">
+                        <div class="mailchimp-submitting"></div><!-- mailchimp-submitting end -->
+                        <div class="mailchimp-success"></div><!-- mailchimp-success end -->
+                        <div class="mailchimp-error"></div><!-- mailchimp-error end -->
+                    </div><!-- mailchimp-alerts end -->
+                </div>
+                <div class="newsletter-socialicons socialicons socialicons-radial">
+                    @if (_socialNetworking != null && _socialNetworking.Count > 0)
+                    {
+                        <ul>
+                            @foreach (var item in _socialNetworking)
+                            {
+                                <li><a href="@item.Scl_Ntk_URL" target="_blank"><img src="../../@item.Scl_Ntk_Icon" alt="" /></a></li>
+                            }
+                        </ul>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--// Newsletter Area -->
+</main>
+<!--// Page Conttent -->
+
+<script type="text/javascript">
+    var loadItems = 5;
+    $(".btnSearchProduct").click(function () {
+        loadItems = 5;
+        $("#hdSearchKey").val("");
+        var subcatid = $(".txtSearchBox").val();
+        $("#hdnLoadmore").val(subcatid);
+        getProducts(subcatid, loadItems);
+    });
+
+    if ($("#hdSearchKey").val() != "") {
+        var subcatid = $("#hdSearchKey").val();
+        $("#hdnLoadmore").val(subcatid);
+        getProducts(subcatid, loadItems);
+    }
+
+    $("#btnLoadMore").click(function () {
+        loadItems = loadItems + 5;
+        getProducts($("#hdnLoadmore").val(), loadItems);
+    });
+
+    function getProducts(s, a) {
+        $.ajax({
+            type: 'GET',
+            url: '/home/GetProductsSearchKey',
+            data: { s: s, loadItems: a },
+            cache: false,
+            success: function (result) {
+                $(".txtSearchBox").val(s);
+                $("#lblCountProduct").text(result.length);
+                $("#lblSearchProduct").text(s);
+                $("#RachnaContainer").html('');
+                $("#RachnaTemplate").tmpl(result).appendTo("#RachnaContainer");
+            }
+        });
+    }
+</script>

@@ -1,0 +1,38 @@
+﻿<!doctype html>
+<html class="no-js" lang="zxx">
+<head>
+    <title>Rachna's Store - @ViewBag.Title</title>
+    <link rel="icon" href="../../content/favicon.png" type="image/x-icon" />
+    @System.Web.Optimization.Styles.Render("~/bundles/feglobal")
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="../../appfiles/frontend2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../appfiles/frontend2/css/plugins.css">
+    <link rel="stylesheet" href="../../appfiles/frontend2/css/order.css">
+    @System.Web.Optimization.Styles.Render("~/bundles/stylesTheme2")
+    @System.Web.Optimization.Scripts.Render("~/bundles/scriptsGlobal")
+</head>
+
+<body>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <script src="../../appfiles/frontend/js/jquery.tmpl.min.js"></script>
+    <div id="wrapper" class="wrapper">
+        <!-- Header -->
+        @Html.Partial("themeglobal2/_header")
+        <!--// Header -->
+        <!-- Page Conttent -->
+        <main class="page-content">
+            @RenderBody()
+        </main>
+        <!--// Page Conttent -->
+        <!-- Footer -->
+        @Html.Partial("themeglobal2/_footer")
+        <!--// Footer -->
+    </div>
+    <!--// Wrapper -->
+    <!-- Js Files -->
+    @System.Web.Optimization.Scripts.Render("~/bundles/scriptsTheme2");
+    <script src="~/appfiles/frontend2/js/jquery.tmpl.js"></script>
+</body>
+</html>

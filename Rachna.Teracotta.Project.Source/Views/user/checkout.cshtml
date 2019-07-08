@@ -1,0 +1,146 @@
+﻿@{
+    ViewBag.Title = "Checkout";
+    Layout = "~/Views/Shared/_productlayout.cshtml";
+}
+
+@{
+
+    List<Rachna.Teracotta.Project.Source.Models.Carts> _cart = null;
+    Rachna.Teracotta.Project.Source.ViewModel.CartModel _cartMdl = new Rachna.Teracotta.Project.Source.ViewModel.CartModel();
+    _cart = _cartMdl.GetCarts();
+
+    int totalitems = 0;
+    decimal totalsubtotal = 0;
+    decimal totalshippingcharge = 0;
+    decimal totaltotal = 0;
+
+    if (_cart.Count > 0)
+    {
+        totalitems = _cart.Count;
+        foreach (var item in _cart)
+        {
+            totalsubtotal = totalsubtotal + item.Cart_Price;
+            totalshippingcharge = totalshippingcharge + item.Shipping_Charge;
+        }
+        totaltotal = totalsubtotal + totalshippingcharge;
+    }
+
+}
+<!-- Breadcrumb Area -->
+<div class="breadcrumb-area bg-grey">
+    <div class="container">
+        <div class="ho-breadcrumb">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/user/">Shop</a></li>
+                <li>Shopping Cart</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!--// Breadcrumb Area -->
+<!-- Shopping Cart Area -->
+<div class="cart-page-area ptb-30 bg-white">
+    <div class="container">
+        @if (_cart != null && _cart.Count > 0)
+        {
+            <!-- Cart Products -->
+            <div class="cart-table table-responsive">
+                <table class="table table-bordered table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th class="table-title">Product Code</th>
+                            <th class="table-title">Product Name</th>
+                            <th class="table-title">Size</th>
+                            <th class="table-title">Unit Price</th>
+                            <th class="table-title">Quantity</th>
+                            <th class="table-title">SubTotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in _cart)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="/product/index?id=@item.Product_Id" class="product-image">
+                                        <img src="../../@item.Product_Banner" alt="Product image big">
+                                    </a>
+                                </td>
+                                <td>
+                                    <span>@item.Products.ProductCode</span>
+                                </td>
+                                <td>
+                                    <a href="/product/index?id=@item.Product_Id" class="product-title">@item.Product_Title</a>
+                                </td>
+                                <td>
+                                    <span>Size:</span> @item.Cart_Size
+                                </td>
+                                <td class="product-code">@item.Product_Price</td>
+                                <td>
+                                    <span>@item.Cart_Qty</span>
+                                </td>
+                                <td class="product-total-col">
+                                    <span class="product-price-special">@(item.Cart_Qty * item.Product_Price)</span>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <!--// Cart Products -->
+            <!-- Cart Content -->
+            <div class="cart-content">
+                <div class="row justify-content-between">
+                    <div class="col-lg-6 col-md-6 col-12">
+                        <div class="cart-content-left">
+                            <div class="cart-content-coupon">
+                                &nbsp;
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-12 col-12">
+                        <div class="cart-content-right">
+                            <h2>TOTALS</h2>
+                            <table class="cart-pricing-table">
+                                <tbody>
+                                    <tr class="cart-subtotal">
+                                        <th>SUBTOTAL</th>
+                                        <td>&#x20B9; @Math.Round(totalsubtotal)</td>
+                                    </tr>
+                                    <tr class="cart-shipping">
+                                        <th>SHIPPING</th>
+                                        <td>&#x20B9; @Math.Round(totalshippingcharge)</td>
+                                    </tr>
+                                    <tr class="cart-total">
+                                        <th>Total</th>
+                                        <td>&#x20B9; @Math.Round(totaltotal)</td>
+                                    </tr>
+                                    <tr class="cart-subtotal">
+                                        <th>Applied Coupon</th>
+                                        <td>&#x20B9; NA</td>
+                                    </tr>
+                                    <tr class="cart-total">
+                                        <th>Final Price</th>
+                                        <td>&#x20B9; @Math.Round(totaltotal)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <a href="/user/checkoutconfirm?pageId=hjhgjgjgjgjhj234j2hgj234j2g2j35gj345gj34GUIDHHJF&redirect-url=checkout" class="ho-button">
+                                <span>Proceed to Checkout</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--// Cart Content -->
+        }
+        else
+        {
+            <div class="checkout-info">
+                No items in your cart....
+            </div>
+        }
+    </div>
+</div>
+<!--// Shopping Cart Area -->

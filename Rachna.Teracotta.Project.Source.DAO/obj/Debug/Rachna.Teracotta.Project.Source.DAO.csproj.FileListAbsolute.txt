@@ -1,0 +1,15 @@
+E:\SOURCE CODE\rachnastore\Rachna.Teracotta.Project.Source.DAO\bin\Debug\Rachna.Teracotta.Project.Source.DAO.dll.config
+E:\SOURCE CODE\rachnastore\Rachna.Teracotta.Project.Source.DAO\bin\Debug\Rachna.Teracotta.Project.Source.DAO.dll
+E:\SOURCE CODE\rachnastore\Rachna.Teracotta.Project.Source.DAO\bin\Debug\Rachna.Teracotta.Project.Source.DAO.pdb
+E:\SOURCE CODE\rachnastore\Rachna.Teracotta.Project.Source.DAO\bin\Debug\EntityFramework.dll
+E:\SOURCE CODE\rachnastore\Rachna.Teracotta.Project.Source.DAO\bin\Debug\EntityFramework.SqlServer.dll
+E:\SOURCE CODE\rachnastore\Rachna.Teracotta.Project.Source.DAO\bin\Debug\EntityFramework.xml
+E:\SOURCE CODE\rachnastore\Rachna.Teracotta.Project.Source.DAO\bin\Debug\EntityFramework.SqlServer.xml
+E:\SOURCE CODE\rachnastore\Rachna.Teracotta.Project.Source.DAO\obj\Debug\Rachna.Teracotta.Project.Source.DAO.csproj.CoreCompileInputs.cache
+E:\SOURCE CODE\rachnastore\Rachna.Teracotta.Project.Source.DAO\obj\Debug\Rachna.Teracotta.Project.Source.DAO.csproj.CopyComplete
+E:\SOURCE CODE\rachnastore\Rachna.Teracotta.Project.Source.DAO\obj\Debug\Rachna.Teracotta.Project.Source.DAO.dll
+E:\SOURCE CODE\rachnastore\Rachna.Teracotta.Project.Source.DAO\obj\Debug\Rachna.Teracotta.Project.Source.DAO.pdb
+E:\SOURCE CODE\rachnastore\Rachna.Teracotta.Project.Source.DAO\obj\Debug\Rachna.Teracotta.Project.Source.DAO.csprojAssemblyReference.cache
+E:\SOURCE CODE\rachnastore\Rachna.Teracotta.Project.Source.DAO\bin\Debug\Rachna.Teracotta.Project.Source.Common.dll
+E:\SOURCE CODE\rachnastore\Rachna.Teracotta.Project.Source.DAO\bin\Debug\Rachna.Teracotta.Project.Source.Common.pdb
+E:\SOURCE CODE\rachnastore\Rachna.Teracotta.Project.Source.DAO\bin\Debug\Rachna.Teracotta.Project.Source.Common.dll.config

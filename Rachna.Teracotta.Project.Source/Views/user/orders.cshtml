@@ -1,0 +1,174 @@
+﻿
+@{
+    ViewBag.Title = "My Orders";
+    Layout = "~/Views/Shared/_productlayout.cshtml";
+
+    List<Rachna.Teracotta.Project.Source.Models.Order> _orders = null;
+    List<Rachna.Teracotta.Project.Source.Models.Order> _failedorders = null;
+
+    using (var ctx = new Rachna.Teracotta.Project.Source.App_Data.RachnaDBContext())
+    {
+        _orders = ctx.Orders.ToList().Where(m => m.Customer_Id == Convert.ToInt32(Session["UserKey"].ToString()) &&
+            m.Order_Status != Rachna.Teracotta.Project.Source.Entity.eOrderStatus.Rejected.ToString() &&
+            m.Order_Status != Rachna.Teracotta.Project.Source.Entity.eOrderStatus.Cancelled.ToString() &&
+            m.Order_Status != Rachna.Teracotta.Project.Source.Entity.eOrderDeliveryStatus.DelveryCompleted.ToString()).ToList();
+        if (_orders != null)
+        {
+            foreach (var item in _orders)
+            {
+                item.OrderHistory = ctx.OrderHistories.ToList().Where(m => m.Order_Id == item.Order_Id).ToList();
+            }
+        }
+
+        _failedorders = ctx.Orders.ToList().Where(m => m.Customer_Id == Convert.ToInt32(Session["UserKey"].ToString()) &&
+            (m.Order_Status == Rachna.Teracotta.Project.Source.Entity.eOrderStatus.Rejected.ToString() ||
+            m.Order_Status == Rachna.Teracotta.Project.Source.Entity.eOrderStatus.Cancelled.ToString()) ||
+            m.Order_Status == Rachna.Teracotta.Project.Source.Entity.eOrderDeliveryStatus.DelveryCompleted.ToString()).ToList();
+        if (_orders != null)
+        {
+            foreach (var item in _failedorders)
+            {
+                item.OrderHistory = ctx.OrderHistories.ToList().Where(m => m.Order_Id == item.Order_Id).ToList();
+            }
+        }
+    }
+}
+
+<!-- Breadcrumb Area -->
+<div class="breadcrumb-area bg-grey">
+    <div class="container">
+        <div class="ho-breadcrumb">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/user/">My Account</a></li>
+                <li>My Orders</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!--// Breadcrumb Area -->
+<!-- Shopping Cart Area -->
+<div class="cart-page-area ptb-30 bg-white">
+    <div class="container">
+        <h4>Active Orders</h4>
+        @if (_orders != null && _orders.Count > 0)
+        {
+            <!-- Cart Products -->
+            <div class="cart-table">
+                <table class="table table-bordered table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th class="table-title">Product Name</th>
+                            <th class="table-title">Product Code</th>
+                            <th class="table-title">Unit Price</th>
+                            <th class="table-title">Quantity</th>
+                            <th class="table-title">SubTotal</th>
+                            <th><span class="close-button disabled"></span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in _orders)
+                        {
+                            <tr>
+                                <td class="product-name-col">
+                                    <a href="/product/index?id=@item.Product_Id" class="product-image">
+                                        <img src="../../@item.Product_Banner" alt="Product image big">
+                                    </a>
+                                </td>
+                                <td class="product-code">
+                                    <a href="/product/index?id=@item.Product_Id">@item.Product_Title</a>
+                                    <span>Size:</span> @item.Order_Size
+                                </td>
+                                <td class="product-code">@item.Product_Price</td>
+                                <td>
+                                    <div class="custom-quantity-input">
+                                        <span>@item.Order_Qty</span>
+                                    </div>
+                                </td>
+                                <td class="product-total-col">
+                                    <span class="product-price-special">@(item.Order_Qty * item.Product_Price)</span>
+                                </td>
+                                <td>
+                                    <a href="/user/trackorder?OrderId=@item.Order_Id" class="btn btn-primary">Track Order</a>
+                                    @if (item.Order_Status == "Placed" || item.Order_Status == "Approved" || item.Order_Status == "Shipped" || item.Order_Status == "Dispatched")
+                                    {
+                                        <a href="/user/cancelorder?orderId=@item.Order_Id" class="btn btn-danger" style="background-color:red;color:white;">Cancel Order</a>
+                                    }
+                                    <p style="color:blue">@item.OrderHistory.LastOrDefault().OrderHistory_Description</p>
+                                    <p style="color:red"><b>Delivery expected by @item.Order_Delievery_Date.ToString("D")</b></p>
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <!--// Cart Products -->
+        }
+        else
+        {
+            <div class="checkout-info">
+                No items in your order list....
+            </div>
+        }
+
+        <hr />
+        <h4>Completed Or Rejected/Cancelled Orders</h4>
+        @if (_failedorders != null && _failedorders.Count > 0)
+        {
+            <!-- Cart Products -->
+            <div class="cart-table">
+                <table class="table table-bordered table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th class="table-title">Product Name</th>
+                            <th class="table-title">Product Code</th>
+                            <th class="table-title">Unit Price</th>
+                            <th class="table-title">Quantity</th>
+                            <th class="table-title">SubTotal</th>
+                            <th><span class="close-button disabled"></span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in _failedorders)
+                        {
+                            <tr>
+                                <td class="product-name-col">
+                                    <a href="/product/index?id=@item.Product_Id" class="product-image">
+                                        <img src="../../@item.Product_Banner" alt="Product image big">
+                                    </a>
+                                </td>
+                                <td class="product-code">
+                                    <a href="/product/index?id=@item.Product_Id">@item.Product_Title</a>
+                                    <span>Size:</span> @item.Order_Size
+                                </td>
+                                <td class="product-code">@item.Product_Price</td>
+                                <td>
+                                    <div class="custom-quantity-input">
+                                        <span>@item.Order_Qty</span>
+                                    </div>
+                                </td>
+                                <td class="product-total-col">
+                                    <span class="product-price-special">@(item.Order_Qty * item.Product_Price)</span>
+                                </td>
+                                <td>
+                                    <p style="color:blue">@item.OrderHistory.LastOrDefault().OrderHistory_Description</p>
+                                    <p style="color:red"><b>Delivery expected by @item.Order_Delievery_Date.ToString("D")</b></p>
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <!--// Cart Products -->
+        }
+        else
+        {
+            <div class="checkout-info">
+                No failed items in your order list....
+            </div>
+        }
+
+    </div>
+</div>

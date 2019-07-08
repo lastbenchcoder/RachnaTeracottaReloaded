@@ -1,0 +1,229 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Welcome to Store API World</title>
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/sticky-footer-navbar.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <!-- Fixed navbar -->
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <a class="navbar-brand" href="#">STORE API WORLD</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#clsStores">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#clsInvitations">Invitations</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#clsAdministration">Admin</a>
+                    </li>
+                </ul>
+                <form class="form-inline mt-2 mt-md-0">
+                    <div id="editor"></div>
+                    <button class="btn btn-outline-success my-2 my-sm-0" id="btnExportToPDF">Export to Excel</button>
+                </form>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Begin page content -->
+    <main role="main" class="container" id="clsStores">
+        <h1 class="mt-5">STORES</h1>
+        <p class="lead">Below api's will help you to Create, Update, List, Detail the stores</p>
+        <h5>CREATE NEW STORE:</h5>
+        <p>Below URL is used to create the new store, it is POST method requires json input.</p>
+        <p><strong>URL:</strong> <a href="#" target="_blank">http://www.all4road.com/api/stores</a></p>
+        <p><strong>TYPE :</strong> POST</p>
+        <p>
+            <strong>Content-Type:</strong> application/json
+        </p>
+        <p><strong>INPUT JSON:</strong> </p>
+        <pre>
+            {
+                "Store_Name":"Rachna TeracottaStore",
+                "Store_Description":"Online Rachna Teracotta Testing Store",
+                "Store_Logo":"http://rachnateracotta.com/content/logo.png",
+                "Store_Status":"Active"
+            }
+
+        </pre>
+        <h1>&nbsp;</h1>
+        <h5>LIST STORE:</h5>
+        <p>Below URL is used to list all the created stores, it is GET method does not require any input.</p>
+        <p><strong>URL:</strong> <a href="http://www.all4road.com/api/stores" target="_blank">http://www.all4road.com/api/stores</a></p>
+
+        <h1>&nbsp;</h1>
+        <h5>STORE DETAIL:</h5>
+        <p>Below URL is used to get the detail of the stores, it is GET method does not require storeid as a parameter.</p>
+        <p><strong>URL:</strong> <a href="http://www.all4road.com/api/stores/1/" target="_blank">http://www.all4road.com/api/stores/{storeid}</a></p>
+
+        <h1>&nbsp;</h1>
+        <h5>UPDATE STORE:</h5>
+        <p>Below URL is used to update the new store, it is POST method requires json input.</p>
+        <p><strong>URL:</strong> <a href="#" target="_blank">http://www.all4road.com/api/stores/{store id to update}</a></p>
+        <p><strong>TYPE :</strong> POST</p>
+        <p>
+            <strong>Content-Type:</strong> application/json
+        </p>
+        <p><strong>INPUT JSON:</strong> </p>
+        <pre>
+           {
+                "Store_Id":1,
+                "StoreCode":"RT1STRECODE2",
+                "Store_Name":"Rachna TeracottaStore Updated",
+                "Store_Description":"Online Rachna Teracotta Testing Store",
+                "Store_Url":"?storecode=RT1STRECODE2&redirect-url=Rachna TeracottaStore.html",
+                "Store_Logo":"http://rachnateracotta.com/content/logo.png",
+                "Store_CreatedDate":"2019-07-07T02:58:18.993",
+                "Store_UpdatedDate":"2019-07-07T02:58:18.993",
+                "Store_Status":"Active"
+            }
+        </pre>
+    </main>
+
+    <main role="main" class="container" id="clsInvitations">
+        <h1 class="mt-5">INVITATIONS</h1>
+        <p class="lead">Below api's will help you to Create, Update, List, Detail the Invitations</p>
+        <h5>CREATE NEW INVITATION:</h5>
+        <p>Below URL is used to create the new invitations, it is POST method requires json input.</p>
+        <p><strong>URL:</strong> <a href="#" target="_blank">http://www.all4road.com/api/invitations</a></p>
+        <p><strong>TYPE :</strong> POST</p>
+        <p>
+            <strong>Content-Type:</strong> application/json
+        </p>
+        <p><strong>INPUT JSON:</strong> </p>
+        <pre>
+           {
+                "Role":"SuperAdmin",
+                "Store_Id":1,
+                "Invitation_EmailId":"admin@rachnateracotta.com",
+                "Invitation_Status":"Active",
+                "Send_Activity_Mail":1
+            }
+        </pre>
+        <h1>&nbsp;</h1>
+        <h5>LIST INVITATIONS:</h5>
+        <p>Below URL is used to list all the created invitations, it is GET method does not require any input.</p>
+        <p><strong>URL:</strong> <a href="http://www.all4road.com/api/invitations" target="_blank">http://www.all4road.com/api/invitations</a></p>
+
+        <h1>&nbsp;</h1>
+        <h5>INVITATIONS DETAIL:</h5>
+        <p>Below URL is used to get the detail of the invitation, it is GET method does not require storeid as a parameter.</p>
+        <p><strong>URL:</strong> <a href="http://www.all4road.com/api/invitations/1/" target="_blank">http://www.all4road.com/api/invitations/{invitationid}</a></p>
+
+        <h1>&nbsp;</h1>
+        <h5>UPDATE INVITATIONS:</h5>
+        <p>Below URL is used to update the invitation, it is POST method requires json input.</p>
+        <p><strong>URL:</strong> <a href="#" target="_blank">http://www.all4road.com/api/invitations/{invitation id to update}</a></p>
+        <p><strong>TYPE :</strong> POST</p>
+        <p>
+            <strong>Content-Type:</strong> application/json
+        </p>
+        <p><strong>INPUT JSON:</strong> </p>
+        <pre>
+          {
+            "Invitation_Id":1,
+            "Invitation_Code":"RT1INVTCODE2",
+            "Role":"SuperAdmin",
+            "Store_Id":1,
+            "Invitation_EmailId":"admin@rachnateracotta.com",
+            "Invitation_Status":"Active",
+            "Invitation_CreatedDate":"2019-07-07T06:06:14.033",
+            "Invitation_UpdatedDate":"2019-07-07T06:06:14.033",
+            "Send_Activity_Mail":1
+        }
+        </pre>
+    </main>
+
+    <main role="main" class="container" id="clsAdministration">
+        <h1 class="mt-5">ADMINISTRATION</h1>
+        <p class="lead">Below api's will help you to Create, Update, List, Detail the admin</p>
+        <h5>CREATE NEW INVITATION:</h5>
+        <p>Below URL is used to create the new admin, it is POST method requires json input.</p>
+        <p><strong>URL:</strong> <a href="#" target="_blank">http://www.all4road.com/api/admin</a></p>
+        <p><strong>TYPE :</strong> POST</p>
+        <p>
+            <strong>Content-Type:</strong> application/json
+        </p>
+        <p><strong>INPUT JSON:</strong> </p>
+        <pre>
+           {
+                "Invitation_Id":1,
+                "Store_Id":1,
+                "FullName":"chakrapani u",
+                "EmailId":"chakrapani24@gmail.com",
+                "Phone":"9089786766",
+                "Description":"admin about",
+                "Photo":"admin",
+                "Password":"admin",
+                "Admin_Status":"active",
+                "Admin_Role":"admin",
+                "Admin_CreatedDate":"2019-10-10T00:00:00",
+                "Admin_UpdatedDate":"2019-10-10T00:00:00",
+                "Admin_Login_Attempt":0,
+                "Send_Activity_Mail":1
+            }
+        </pre>
+        <h1>&nbsp;</h1>
+        <h5>LIST ADMINISTRATION:</h5>
+        <p>Below URL is used to list all the created admin, it is GET method does not require any input.</p>
+        <p><strong>URL:</strong> <a href="http://www.all4road.com/api/admin" target="_blank">http://www.all4road.com/api/admin</a></p>
+
+        <h1>&nbsp;</h1>
+        <h5>ADMINISTRATION DETAIL:</h5>
+        <p>Below URL is used to get the detail of the invitation, it is GET method does not require storeid as a parameter.</p>
+        <p><strong>URL:</strong> <a href="http://www.all4road.com/api/admin/1/" target="_blank">http://www.all4road.com/api/admin/{admin_id}</a></p>
+
+        <h1>&nbsp;</h1>
+        <h5>UPDATE ADMINISTRATION:</h5>
+        <p>Below URL is used to update the invitation, it is POST method requires json input.</p>
+        <p><strong>URL:</strong> <a href="#" target="_blank">http://www.all4road.com/api/admin/{invitation id to update}</a></p>
+        <p><strong>TYPE :</strong> POST</p>
+        <p>
+            <strong>Content-Type:</strong> application/json
+        </p>
+        <p><strong>INPUT JSON:</strong> </p>
+        <pre>
+          {
+                "Administrators_Id":7,
+                "Invitation_Id":1,
+                "Store_Id":1,
+                "AdminCode":"123ADM1",
+                "FullName":"test",
+                "EmailId":"test@gmail.com",
+                "Phone":"9089786756",
+                "Description":"admin",
+                "Photo":"admin",
+                "Password":"admin",
+                "Admin_Status":"active",
+                "Admin_Role":"admin",
+                "Admin_Login_Attempt":0,
+                "Send_Activity_Mail":1,
+                "Admin_CreatedDate":"2019-10-10T00:00:00",
+                "Admin_UpdatedDate":"2019-10-10T00:00:00"
+          }
+        </pre>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <span class="text-muted">ALL APIS FROM RACHNA TERACOTTA, DEVELOPED BY CHAKRAPANI UPADHYAYA</span>
+        </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

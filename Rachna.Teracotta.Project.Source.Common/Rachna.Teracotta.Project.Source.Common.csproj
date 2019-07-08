@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1FA130CF-9386-474A-BA8D-94C7679ECAD4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Rachna.Teracotta.Project.Source.Common</RootNamespace>
+    <AssemblyName>Rachna.Teracotta.Project.Source.Common</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Entities\AdminActivity.cs" />
+    <Compile Include="Entities\AdminChatting.cs" />
+    <Compile Include="Entities\AdminChatting_Audit.cs" />
+    <Compile Include="Entities\Administrator.cs" />
+    <Compile Include="Entities\Administrators_Audit.cs" />
+    <Compile Include="Entities\Ads.cs" />
+    <Compile Include="Entities\Ads_Audit.cs" />
+    <Compile Include="Entities\Carts.cs" />
+    <Compile Include="Entities\Carts_Audit.cs" />
+    <Compile Include="Entities\Categories.cs" />
+    <Compile Include="Entities\Categories_Audit.cs" />
+    <Compile Include="Entities\ContactOwner.cs" />
+    <Compile Include="Entities\ContactOwner_Audit.cs" />
+    <Compile Include="Entities\CustomerAddress.cs" />
+    <Compile Include="Entities\CustomerAddress_Audit.cs" />
+    <Compile Include="Entities\CustomerRequest.cs" />
+    <Compile Include="Entities\CustomerRequest_Audit.cs" />
+    <Compile Include="Entities\Customers.cs" />
+    <Compile Include="Entities\CustomerSearchKey.cs" />
+    <Compile Include="Entities\CustomerSearchKey_Audit.cs" />
+    <Compile Include="Entities\Customers_Audit.cs" />
+    <Compile Include="Entities\DealOfTheDay.cs" />
+    <Compile Include="Entities\DealOfTheDay_Audit.cs" />
+    <Compile Include="Entities\DeleveryTeam.cs" />
+    <Compile Include="Entities\DeleveryTeam_Audit.cs" />
+    <Compile Include="Entities\DeliveryMethod.cs" />
+    <Compile Include="Entities\DeliveryMethod_Audit.cs" />
+    <Compile Include="Entities\EmailTracker.cs" />
+    <Compile Include="Entities\FunctionalDefect.cs" />
+    <Compile Include="Entities\FunctionalDefectStory.cs" />
+    <Compile Include="Entities\FunctionalDefectStory_Audit.cs" />
+    <Compile Include="Entities\FunctionalDefect_Audit.cs" />
+    <Compile Include="Entities\Functionality.cs" />
+    <Compile Include="Entities\Functionality_Audit.cs" />
+    <Compile Include="Entities\Invitations.cs" />
+    <Compile Include="Entities\Invitations_Audit.cs" />
+    <Compile Include="Entities\Logo.cs" />
+    <Compile Include="Entities\Logo_Audit.cs" />
+    <Compile Include="Entities\MetaInformation.cs" />
+    <Compile Include="Entities\MetaInformation_Audit.cs" />
+    <Compile Include="Entities\Offers.cs" />
+    <Compile Include="Entities\Offers_Audit.cs" />
+    <Compile Include="Entities\Order.cs" />
+    <Compile Include="Entities\OrderDelivery.cs" />
+    <Compile Include="Entities\OrderDelivery_Audit.cs" />
+    <Compile Include="Entities\OrderHistory.cs" />
+    <Compile Include="Entities\OrderHistory_Audit.cs" />
+    <Compile Include="Entities\Order_Audit.cs" />
+    <Compile Include="Entities\Pages.cs" />
+    <Compile Include="Entities\Pages_Audit.cs" />
+    <Compile Include="Entities\PaymentMethod.cs" />
+    <Compile Include="Entities\PaymentMethod_Audit.cs" />
+    <Compile Include="Entities\ProdComments.cs" />
+    <Compile Include="Entities\ProdComments_Audit.cs" />
+    <Compile Include="Entities\Product.cs" />
+    <Compile Include="Entities\ProductBanners.cs" />
+    <Compile Include="Entities\ProductBanners_Audit.cs" />
+    <Compile Include="Entities\ProductEight.cs" />
+    <Compile Include="Entities\ProductEight_Audit.cs" />
+    <Compile Include="Entities\ProductFeatures.cs" />
+    <Compile Include="Entities\ProductFeatures_Audit.cs" />
+    <Compile Include="Entities\ProductFlow.cs" />
+    <Compile Include="Entities\ProductFlow_Audit.cs" />
+    <Compile Include="Entities\Product_Audit.cs" />
+    <Compile Include="Entities\RMenu.cs" />
+    <Compile Include="Entities\RMenu_Audit.cs" />
+    <Compile Include="Entities\Sliders.cs" />
+    <Compile Include="Entities\Sliders_Audit.cs" />
+    <Compile Include="Entities\SocialNetworking.cs" />
+    <Compile Include="Entities\SocialNetworking_Audit.cs" />
+    <Compile Include="Entities\StoreAPI.cs" />
+    <Compile Include="Entities\Stores.cs" />
+    <Compile Include="Entities\Stores_Audit.cs" />
+    <Compile Include="Entities\SubCategories.cs" />
+    <Compile Include="Entities\SubCategories_Audit.cs" />
+    <Compile Include="Entities\Subscription.cs" />
+    <Compile Include="Entities\Subscription_Audit.cs" />
+    <Compile Include="Entities\UnderConstrunction.cs" />
+    <Compile Include="Entities\UnderConstrunction_Audit.cs" />
+    <Compile Include="Entities\Videos.cs" />
+    <Compile Include="Entities\Videos_Audit.cs" />
+    <Compile Include="Entities\VisitedProducts.cs" />
+    <Compile Include="Entities\VisitedProducts_Audit.cs" />
+    <Compile Include="Enums\eCartStatus.cs" />
+    <Compile Include="Enums\eCommentStatus.cs" />
+    <Compile Include="Enums\eCustomerType.cs" />
+    <Compile Include="Enums\eEmailStatus.cs" />
+    <Compile Include="Enums\eFunctionalityStatus.cs" />
+    <Compile Include="Enums\eMenu.cs" />
+    <Compile Include="Enums\eOrderDeliveryStatus.cs" />
+    <Compile Include="Enums\eOrderStatus.cs" />
+    <Compile Include="Enums\ePriority.cs" />
+    <Compile Include="Enums\eProductFeature.cs" />
+    <Compile Include="Enums\eProductStatus.cs" />
+    <Compile Include="Enums\eRole.cs" />
+    <Compile Include="Enums\eStatus.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

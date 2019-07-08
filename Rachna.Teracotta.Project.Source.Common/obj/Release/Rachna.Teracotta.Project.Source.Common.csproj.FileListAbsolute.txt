@@ -1,0 +1,12 @@
+E:\SOURCE CODE\rachnastore\Rachna.Teracotta.Project.Source.Common\bin\Release\Rachna.Teracotta.Project.Source.Common.dll.config
+E:\SOURCE CODE\rachnastore\Rachna.Teracotta.Project.Source.Common\bin\Release\Rachna.Teracotta.Project.Source.Common.dll
+E:\SOURCE CODE\rachnastore\Rachna.Teracotta.Project.Source.Common\bin\Release\Rachna.Teracotta.Project.Source.Common.pdb
+E:\SOURCE CODE\rachnastore\Rachna.Teracotta.Project.Source.Common\bin\Release\EntityFramework.dll
+E:\SOURCE CODE\rachnastore\Rachna.Teracotta.Project.Source.Common\bin\Release\EntityFramework.SqlServer.dll
+E:\SOURCE CODE\rachnastore\Rachna.Teracotta.Project.Source.Common\bin\Release\EntityFramework.xml
+E:\SOURCE CODE\rachnastore\Rachna.Teracotta.Project.Source.Common\bin\Release\EntityFramework.SqlServer.xml
+E:\SOURCE CODE\rachnastore\Rachna.Teracotta.Project.Source.Common\obj\Release\Rachna.Teracotta.Project.Source.Common.csprojAssemblyReference.cache
+E:\SOURCE CODE\rachnastore\Rachna.Teracotta.Project.Source.Common\obj\Release\Rachna.Teracotta.Project.Source.Common.csproj.CoreCompileInputs.cache
+E:\SOURCE CODE\rachnastore\Rachna.Teracotta.Project.Source.Common\obj\Release\Rachna.Teracotta.Project.Source.Common.csproj.CopyComplete
+E:\SOURCE CODE\rachnastore\Rachna.Teracotta.Project.Source.Common\obj\Release\Rachna.Teracotta.Project.Source.Common.dll
+E:\SOURCE CODE\rachnastore\Rachna.Teracotta.Project.Source.Common\obj\Release\Rachna.Teracotta.Project.Source.Common.pdb
